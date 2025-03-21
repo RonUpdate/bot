@@ -10,9 +10,6 @@ const openai = new OpenAIApi(new Configuration({
   apiKey: process.env.OPENAI_API_KEY, // Получаем API ключ из переменных окружения
 }));
 
-// Удаляем все вебхуки, если они были
-bot.telegram.deleteWebhook();
-
 // Команда /start — приветствие
 bot.command('start', (ctx) => {
   ctx.reply('Привет! Чем могу помочь?');
@@ -31,7 +28,7 @@ bot.on('text', async (ctx) => {
 
     ctx.reply(response.data.choices[0].text.trim());
   } catch (error) {
-    console.error('Ошибка:', error);
+    console.error('Ошибка при обращении к OpenAI:', error.message);  // Логируем ошибку
     ctx.reply('Произошла ошибка. Попробуй снова.');
   }
 });
