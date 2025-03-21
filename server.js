@@ -1,12 +1,13 @@
 const { Telegraf } = require('telegraf');
 const { OpenAIApi, Configuration } = require('openai');
+require('dotenv').config();  // Подключаем dotenv
 
 // Настройка Telegram-бота
-const bot = new Telegraf('7953930520:AAHfK3RHiw5UNWxrBqkeqak1-9VuQ73O4tg'); // Замените на свой токен
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN); // Получаем токен из переменных окружения
 
 // Настройка OpenAI API
 const openai = new OpenAIApi(new Configuration({
-  apiKey: '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', // Замените на свой API ключ
+  apiKey: process.env.OPENAI_API_KEY, // Получаем API ключ из переменных окружения
 }));
 
 // Команда /start — приветствие
