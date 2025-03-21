@@ -7,10 +7,13 @@ const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 // Настройка OpenAI API
 const openai = new OpenAIApi(new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY, // Получаем API ключ из переменных окружения
 }));
 
-// Команда /start
+// Удаляем все вебхуки, если они были
+bot.telegram.deleteWebhook();
+
+// Команда /start — приветствие
 bot.command('start', (ctx) => {
   ctx.reply('Привет! Чем могу помочь?');
 });
