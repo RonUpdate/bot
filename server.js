@@ -35,21 +35,5 @@ bot.on('text', async (ctx) => {
   }
 });
 
-// Настройка порта для Render
-const port = process.env.PORT || 3000;  // Используем порт, который предоставляет Render, или 3000
-
-// Запуск бота
-bot.launch({
-  webhook: {
-    domain: `https://your-app-name.onrender.com`,  // Укажи свой публичный URL Render
-    port: port,
-  },
-});
-
-// Запускаем сервер на нужном порту
-const express = require('express');
-const app = express();
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Запускаем бота
+bot.launch();
