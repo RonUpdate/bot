@@ -3,14 +3,14 @@ const { OpenAIApi, Configuration } = require('openai');
 require('dotenv').config();  // Подключаем dotenv
 
 // Настройка Telegram-бота
-const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN); // Получаем токен из переменных окружения
+const bot = new Telegraf(process.env.TELEGRAM_BOT_TOKEN);
 
 // Настройка OpenAI API
 const openai = new OpenAIApi(new Configuration({
-  apiKey: process.env.OPENAI_API_KEY, // Получаем API ключ из переменных окружения
+  apiKey: process.env.OPENAI_API_KEY,
 }));
 
-// Команда /start — приветствие
+// Команда /start
 bot.command('start', (ctx) => {
   ctx.reply('Привет! Чем могу помочь?');
 });
@@ -20,14 +20,12 @@ bot.on('text', async (ctx) => {
   const userMessage = ctx.message.text;  // Получаем сообщение от пользователя
 
   try {
-    // Отправляем запрос к OpenAI API для генерации ответа
     const response = await openai.createCompletion({
       model: 'text-davinci-003', // Выбираем модель
       prompt: userMessage, // Передаём сообщение в качестве запроса
       max_tokens: 150, // Ограничиваем количество токенов
     });
 
-    // Отправляем ответ пользователю
     ctx.reply(response.data.choices[0].text.trim());
   } catch (error) {
     console.error('Ошибка:', error);
@@ -35,7 +33,7 @@ bot.on('text', async (ctx) => {
   }
 });
 
-// Запуск бота с использованием long polling
+// Запуск бота с использованием long polling (по умолчанию)
 bot.launch()
   .then(() => console.log('Бот запущен 🚀'))
   .catch((error) => console.error('Ошибка при запуске бота:', error));
