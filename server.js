@@ -28,28 +28,18 @@ bot.on('text', async (ctx) => {
     });
 
     // Отправляем ответ пользователю
-    ctx.reply(response.data.choices[0].text);
+    ctx.reply(response.data.choices[0].text.trim());
   } catch (error) {
     console.error('Ошибка:', error);
     ctx.reply('Произошла ошибка. Попробуй снова.');
   }
 });
 
-// Настройка порта для Render
-const port = process.env.PORT || 3000;  // Используем порт, который предоставляет Render, или 3000
+// Запуск бота с использованием long polling
+bot.launch()
+  .then(() => console.log('Бот запущен 🚀'))
+  .catch((error) => console.error('Ошибка при запуске бота:', error));
 
-// Запуск бота
-bot.launch({
-  webhook: {
-    domain: `https://your-app-name.onrender.com`,  // Укажи свой публичный URL Render
-    port: port,
-  },
-});
-
-// Запускаем сервер на нужном порту
-const express = require('express');
-const app = express();
-
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+// Грейсфул-шатдаун (по рекомендации Telegraf)
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
