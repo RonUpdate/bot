@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "telegraf": "^4.7.0",
-    "openai": "^3.0.0"
+    "openai": "^3.0.0",
+    "dotenv": "^10.0.0"
   },
   "engines": {
     "node": ">=18"
